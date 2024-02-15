@@ -1,9 +1,7 @@
 <select
 	name="<?php echo $this->getFieldName(); ?>" 
 	id="<?php echo $this->getFieldHtmlId(); ?>"
-	class="<?php echo $this->getFieldClasses(); ?>"
-	data-validate="<?php echo $this->getJsValidation(); ?>"
-	data-field-id="<?php echo $this->getField()->getId(); ?>">
+	class="<?php echo $this->getFieldClasses(); ?>">
 	
 	<?php foreach ($this->getOptions() as $option): ?>
 		<option value="<?php echo $option; ?>"

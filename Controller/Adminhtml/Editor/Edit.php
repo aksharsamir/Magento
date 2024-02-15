@@ -9,7 +9,7 @@ class Edit extends \Magento\Backend\App\Action
      *
      * @var \Magento\Framework\Registry
      */
-    protected $coreRegistry = null;
+    protected $_coreRegistry = null;
  
     /**
      * @var \Magento\Framework\View\Result\PageFactory
@@ -17,28 +17,30 @@ class Edit extends \Magento\Backend\App\Action
     protected $resultPageFactory;
  
     /**
-     * @param \Magento\Backend\App\Action\Context        $context
+     * @param Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Magento\Framework\Registry                $registry
+     * @param \Magento\Framework\Registry $registry
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Registry $registry
-    ) {
+    )
+    {
         $this->resultPageFactory = $resultPageFactory;
-        $this->coreRegistry = $registry;
+        $this->_coreRegistry = $registry;
         parent::__construct($context);
     }
-    
-    /**
-     * @return boolean
+	
+	/**
+     * {@inheritdoc}
      */
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('Etailors_Forms::Forms_Config');
     }
  
+
     /**
      * Init actions
      *
@@ -76,13 +78,13 @@ class Edit extends \Magento\Backend\App\Action
             }
         }
  
-        $this->coreRegistry->register('form_grid', $model);
+        $this->_coreRegistry->register('form_grid', $model);
  
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->_initAction();
         $resultPage->addBreadcrumb(
             $id ? __('Edit Form') : __('New Form'),
-            $id ? __('Edit Form') : __('New Form')
+			$id ? __('Edit Form') : __('New Form')
         );
         $resultPage->getConfig()->getTitle()->prepend(__('Edit Form'));
         $resultPage->getConfig()->getTitle()

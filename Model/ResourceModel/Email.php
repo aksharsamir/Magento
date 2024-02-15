@@ -4,10 +4,9 @@ namespace Etailors\Forms\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
-class Email extends AbstractDb
-{
-
-    /**
+class Email extends AbstractDb 
+{	
+	/**
      * Initialize resource
      *
      * @return void

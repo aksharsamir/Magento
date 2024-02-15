@@ -8,37 +8,38 @@ class View extends \Magento\Backend\App\Action
      *
      * @var \Magento\Framework\Registry
      */
-    protected $coreRegistry = null;
-
+    protected $_coreRegistry = null;
+ 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
     protected $resultPageFactory;
  
     /**
-     * @param \Magento\Backend\App\Action\Context        $context
+     * @param Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
-     * @param \Magento\Framework\Registry                $registry
-     * @return void
+     * @param \Magento\Framework\Registry $registry
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Registry $registry
-    ) {
+    )
+    {
         $this->resultPageFactory = $resultPageFactory;
-        $this->coreRegistry = $registry;
+        $this->_coreRegistry = $registry;
         parent::__construct($context);
     }
-    
-    /**
-     * @return boolean
+	
+	/**
+     * {@inheritdoc}
      */
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('Etailors_Forms::Forms_Config');
     }
  
+
     /**
      * Init actions
      *
@@ -49,7 +50,7 @@ class View extends \Magento\Backend\App\Action
         // load layout, set active menu and breadcrumbs
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend((__('Email')));
+		$resultPage->getConfig()->getTitle()->prepend((__('Email')));
         return $resultPage;
     }
  
@@ -75,7 +76,7 @@ class View extends \Magento\Backend\App\Action
             }
         }
  
-        $this->coreRegistry->register('answer_grid', $model);
+        $this->_coreRegistry->register('answer_grid', $model);
  
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->_initAction();

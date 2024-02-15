@@ -10,28 +10,37 @@ use Magento\Backend\Block\Widget\Tab\TabInterface;
  */
 class UserEmail extends Generic implements TabInterface
 {
-
     /**
-     * @var \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig
+     * @var \Magento\Store\Model\System\Store
      */
-    protected $wysiwygConfig;
-    
+    protected $_systemStore;
+ 
+    protected $_status;
+	
+	protected $templateConfig;
+	
+	protected $_wysiwygConfig;	
+ 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Framework\Registry             $registry
-     * @param \Magento\Framework\Data\FormFactory     $formFactory
-     * @param \Magento\Cms\Model\Wysiwyg\Config       $wysiwygConfig
-     * @param array                                   $data
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\Data\FormFactory $formFactory
+     * @param \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig
+     * @param \Magento\Store\Model\System\Store $systemStore
+     * @param array $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Data\FormFactory $formFactory,
-        \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
+		\Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
+        \Magento\Store\Model\System\Store $systemStore,
+		\Etailors\Forms\Model\Config\Data\Template $templateConfig,
         array $data = []
     ) {
-
-        $this->wysiwygConfig = $wysiwygConfig;
+        $this->_systemStore = $systemStore;
+		$this->templateConfig = $templateConfig;
+		$this->_wysiwygConfig = $wysiwygConfig;
         parent::__construct($context, $registry, $formFactory, $data);
     }
  
@@ -59,13 +68,14 @@ class UserEmail extends Generic implements TabInterface
  
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create();
-
+		
+ 
         $fieldset = $form->addFieldset(
             'base_fieldset',
             ['legend' => __('User Email'), 'class' => 'fieldset-wide']
         );
-        
-        $fieldset->addField(
+		
+		$fieldset->addField(
             'user_email_enabled',
             'checkbox',
             [
@@ -73,8 +83,8 @@ class UserEmail extends Generic implements TabInterface
                 'title' => __('Enable email to user?'),
                 'name' => 'user_email_enabled',
                 'required' => false,
-                'onchange' => 'this.value = this.checked;',
-                'checked' => ($model->getUserEmailEnabled() == 1) ? true : false
+				'onchange' => 'this.value = this.checked;',
+				'checked' => ($model->getUserEmailEnabled() == 1) ? true : false
             ]
         );
         
@@ -87,8 +97,8 @@ class UserEmail extends Generic implements TabInterface
                 'name' => 'user_email_email',
             ]
         );
-        
-        $fieldset->addField(
+		
+		$fieldset->addField(
             'user_email_name',
             'text',
             [
@@ -97,8 +107,9 @@ class UserEmail extends Generic implements TabInterface
                 'name' => 'user_email_name',
             ]
         );
-
-        $fieldset->addField(
+		
+		
+		$fieldset->addField(
             'user_email_subject',
             'text',
             [
@@ -107,8 +118,8 @@ class UserEmail extends Generic implements TabInterface
                 'name' => 'user_email_subject',
             ]
         );
-        
-        $fieldset->addField(
+		
+		$fieldset->addField(
             'user_email_content',
             'editor',
             [
@@ -116,61 +127,61 @@ class UserEmail extends Generic implements TabInterface
                 'title' => __('Email Content'),
                 'name' => 'user_email_content',
                 'required' => true,
-                'class' => 'required',
-                'wysiwyg' => true,
-                'rows' => '15',
-                'cols' => '30',
-                'config' => $this->wysiwygConfig->getConfig(),
+				'class' => 'required',
+				'wysiwyg' => true,
+				'rows' => '15',
+				'cols' => '30',
+				'config' => $this->_wysiwygConfig->getConfig(),
             ]
         );
-        
+		
         $form->setValues($model->getData());
         $this->setForm($form);
  
         return parent::_prepareForm();
     }
-    
-    /**
-     * Return Tab label
-     *
-     * @return string
-     * @api
-     */
-    public function getTabLabel()
-    {
-        return __('User Email');
-    }
+	
+	/**
+	 * Return Tab label
+	 *
+	 * @return string
+	 * @api
+	 */
+	public function getTabLabel()
+	{
+		return __('User Email');
+	}
 
-    /**
-     * Return Tab title
-     *
-     * @return string
-     * @api
-     */
-    public function getTabTitle()
-    {
-        return __('User Email');
-    }
+	/**
+	 * Return Tab title
+	 *
+	 * @return string
+	 * @api
+	 */
+	public function getTabTitle()
+	{
+		return __('User Email');
+	}
 
-    /**
-     * Can show tab in tabs
-     *
-     * @return boolean
-     * @api
-     */
-    public function canShowTab()
-    {
-        return true;
-    }
+	/**
+	 * Can show tab in tabs
+	 *
+	 * @return boolean
+	 * @api
+	 */
+	public function canShowTab()
+	{
+		return true;
+	}
 
-    /**
-     * Tab is hidden
-     *
-     * @return boolean
-     * @api
-     */
-    public function isHidden()
-    {
-        return false;
-    }
+	/**
+	 * Tab is hidden
+	 *
+	 * @return boolean
+	 * @api
+	 */
+	public function isHidden()
+	{
+		return false;
+	}
 }

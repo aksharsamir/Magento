@@ -36,7 +36,7 @@ class Autofill implements SchemaLocatorInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getSchema()
     {
@@ -44,7 +44,7 @@ class Autofill implements SchemaLocatorInterface
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getPerFileSchema()
     {

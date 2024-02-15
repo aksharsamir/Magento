@@ -4,9 +4,9 @@ namespace Etailors\Forms\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
-class Answer extends AbstractDb
+class Answer extends AbstractDb 
 {
-    /**
+	/**
      * Initialize resource
      *
      * @return void

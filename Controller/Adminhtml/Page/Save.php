@@ -10,7 +10,7 @@ class Save extends \Magento\Backend\App\Action
     protected $resultRedirectFactory;
  
     /**
-     * @param \Magento\Backend\App\Action\Context                $context
+     * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      */
     public function __construct(
@@ -20,9 +20,9 @@ class Save extends \Magento\Backend\App\Action
         $this->resultRedirectFactory = $resultRedirectFactory;
         parent::__construct($context);
     }
-    
-    /**
-     * @return boolean
+	
+	/**
+     * {@inheritdoc}
      */
     protected function _isAllowed()
     {
@@ -36,8 +36,8 @@ class Save extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $params = $this->getRequest()->getParams();
-        $id = $this->getRequest()->getParam('id');
+		$params = $this->getRequest()->getParams();
+		$id = $this->getRequest()->getParam('id');
 
         /** @var \Magebuzz\Staff\Model\Grid $model */
         $model = $this->_objectManager->create('Etailors\Forms\Model\Form\Page');
@@ -53,23 +53,24 @@ class Save extends \Magento\Backend\App\Action
             }
         }
 
-        if (!$model->getId()) {
-            $model->setCreatedAt(date('Y-m-d H:i:s'));
-        }
-        $model->setUpdatedAt(date('Y-m-d H:i:s'));
-        $model->setTitle($params['title']);
-        $model->setFormId($params['form_id']);
-        $model->setSortOrder($params['sort_order']);
-        $model->setTemplate($params['template']);
-        $model->save();
-        
+		if (!$model->getId()) {
+			$model->setCreatedAt(date('Y-m-d H:i:s'));
+		}
+		$model->setUpdatedAt(date('Y-m-d H:i:s'));
+		$model->setTitle($params['title']);
+		$model->setFormId($params['form_id']);
+		$model->setSortOrder($params['sort_order']);
+		$model->setTemplate($params['template']);
+		$model->save();
+		
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
-        
-        if ($this->getRequest()->getParam('back') == 'edit') {
-            return $resultRedirect->setPath('*/*/edit', ['id' => $model->getId(), 'form_id' => $model->getFormId()]);
-        } else {
-            return $resultRedirect->setPath('*/editor/edit', ['id' => $model->getFormId()]);
-        }
+		
+		if ($this->getRequest()->getParam('back') == 'edit') {
+			return $resultRedirect->setPath('*/*/edit', ['id' => $model->getId(), 'form_id' => $model->getFormId()]);
+		}
+		else {
+			return $resultRedirect->setPath('*/editor/edit', ['id' => $model->getFormId()]);
+		}
     }
 }

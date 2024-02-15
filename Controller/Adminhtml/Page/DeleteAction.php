@@ -10,7 +10,7 @@ class DeleteAction extends \Magento\Backend\App\Action
     protected $resultRedirectFactory;
  
     /**
-     * @param \Magento\Backend\App\Action\Context                $context
+     * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      */
     public function __construct(
@@ -20,9 +20,9 @@ class DeleteAction extends \Magento\Backend\App\Action
         $this->resultRedirectFactory = $resultRedirectFactory;
         parent::__construct($context);
     }
-    
-    /**
-     * @return boolean
+	
+	/**
+     * {@inheritdoc}
      */
     protected function _isAllowed()
     {
@@ -36,34 +36,36 @@ class DeleteAction extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        $params = $this->getRequest()->getParams();
-        $id = $this->getRequest()->getParam('id');
+		$params = $this->getRequest()->getParams();
+		$id = $this->getRequest()->getParam('id');
         /** @var \Magebuzz\Staff\Model\Grid $model */
         $model = $this->_objectManager->create('Etailors\Forms\Model\Form\Page');
-        
-        /** \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
-        $resultRedirect = $this->resultRedirectFactory->create();
-        
+		
+		/** \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+		$resultRedirect = $this->resultRedirectFactory->create();
+		
         if ($id) {
             $model->load($id);
-            $formId = $model->getFormId();
+			$formId = $model->getFormId();
             if (!$model->getId()) {
-                $this->messageManager->addError(__('This page no longer exists.'));
+                $this->messageManager->addError(__('This page no longer exists.')); 
                 return $resultRedirect->setPath('*/editor/edit', ['id' => $formId]);
             }
-            
-            try {
-                $model->delete();
-                $this->messageManager->addSuccess(__('The page has been deleted.'));
-                return $resultRedirect->setPath('*/editor/edit', ['id' => $formId]);
-            } catch (\Exception $e) {
-                $this->messageManager->addError(__('Something went wrong trying to delete the page.'));
-                return $resultRedirect->setPath('*/editor/edit', ['id' => $formId]);
-            }
+			
+			try {
+				
+				$model->delete();
+				$this->messageManager->addSuccess(__('The page has been deleted.'));
+				return $resultRedirect->setPath('*/editor/edit', ['id' => $formId]);
+			}
+			catch (\Exception $e) {
+				$this->messageManager->addError(__('Something went wrong trying to delete the page.'));
+				return $resultRedirect->setPath('*/editor/edit', ['id' => $formId]);
+			}
         }
-        
+		
         $this->messageManager->addError(__('Something went wrong trying to delete the page.'));
         
-        return $resultRedirect->setPath('*/editor/index');
+		return $resultRedirect->setPath('*/editor/index');		
     }
 }

@@ -1,16 +1,14 @@
 <?php $iterator = 0; ?>
-<div class="radio-wrapper" data-field-id="<?php echo $this->getField()->getId(); ?>">
-    <?php foreach ($this->getOptions() as $option): ?>
-	    <div class="radio-field-value">
-		    <input type="radio" 
-			    name="<?php echo $this->getFieldName(); ?>" 
-			    id="<?php echo $this->getFieldHtmlId(); ?>_<?php echo $iterator; ?>"
-			    class="<?php echo $this->getFieldClasses(); ?>"
-			    value="<?php echo $option; ?>">
-		    <label class="radio-field-label" for="<?php echo $this->getFieldHtmlId(); ?>_<?php echo $iterator; ?>">
-			    <?php echo $option; ?>
-		    </label>
-	    </div>
-	    <?php $iterator++; ?>
-    <?php endforeach; ?>
-</div>
+<?php foreach ($this->getOptions() as $option): ?>
+	<div class="radio-field-value">
+		<input type="radio" 
+			name="<?php echo $this->getFieldName(); ?>" 
+			id="<?php echo $this->getFieldHtmlId(); ?>_<?php echo $iterator; ?>"
+			class="<?php echo $this->getFieldClasses(); ?>"
+			value="<?php echo $option; ?>">
+		<label class="radio-field-label" for="<?php echo $this->getFieldHtmlId(); ?>_<?php echo $iterator; ?>">
+			<?php echo $option; ?>
+		</label>
+	</div>
+	<?php $iterator++; ?>
+<?php endforeach; ?>

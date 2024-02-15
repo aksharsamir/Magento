@@ -2,19 +2,8 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <referenceContainer name="content">
         <block class="Etailors\Forms\Block\Form" name="etailors_forms_form">
-			<container name="etailors_forms_form.before" as="etailors_forms_form_before" label="Form Fields Before" htmlTag="div" htmlClass="etailors-form-before">
-			    <block class="Etailors\Forms\Block\Form\MandatoryFields" name="etailors_forms_form_mandatory_fields" template="Etailors_Forms::form/content/mandatory-fields.phtml" />
-                <block class="Magento\Framework\View\Element\Template" name="etailors_forms_form_loader" template="Etailors_Forms::form/content/loader.phtml" />
-                <block class="Magento\Framework\View\Element\Template" name="etailors_forms_form_messages" template="Etailors_Forms::form/content/messages.phtml" />
-                    
-            </container>
-			<container name="etailors_forms_form.content" as="form_content" htmlTag="div" htmlClass="form-fields">
-			    <block class="Etailors\Forms\Block\Form\Fields" name="etailors_forms_form_fields" template="Etailors_Forms::form/content/fields.phtml" />
-			</container>
+			<container name="etailors_forms_form.before" as="etailors_forms_form_before" label="Form Fields Before" htmlTag="div" htmlClass="etailors-form-before"/>
 			<container name="etailors_forms_form.after" as="etailors_forms_form_after" label="Form Fields After" htmlTag="div" htmlClass="etailors-form-after"/>
-			<container name="etailors_forms_form.buttons" as="form_buttons" htmlTag="div" htmlClass="form-buttons">
-			    <block class="Etailors\Forms\Block\Form\Buttons" name="etailors_forms_form_buttons" template="Etailors_Forms::form/content/buttons.phtml" />
-			</container>
 			<container name="etailors_forms_form.after_submit" as="etailors_forms_form_after_submit" label="Form Fields After" htmlTag="div" htmlClass="etailors-form-after"/>
 		</block>
     </referenceContainer>

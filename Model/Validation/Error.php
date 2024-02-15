@@ -2,38 +2,23 @@
 
 namespace Etailors\Forms\Model\Validation;
 
-class Error extends \Magento\Framework\DataObject
+class Error extends \Magento\Framework\DataObject 
 {
-
-    /**
-     * @var string
-     */
-    protected $message;
-    
-    /**
-     * @param string $message
-     * @return void
-     */
+	protected $message;
+	
     public function __construct($message = '')
     {
         $this->message = $message;
-        parent::__construct([]);
+		parent::__construct([]);
     }
-    
-    /**
-     * @return string
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-    
-    /**
-     * @param string $message
-     * @return void
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-    }
+	
+	public function getMessage() 
+	{
+		return $this->message;
+	}
+	
+	public function setMessage($message) 
+	{
+		return $this->message = $message;
+	}
 }

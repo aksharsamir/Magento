@@ -4,10 +4,9 @@ namespace Etailors\Forms\Model\ResourceModel\Form;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
-class Page extends AbstractDb
-{
-
-    /**
+class Page extends AbstractDb 
+{	
+	/**
      * Initialize resource
      *
      * @return void

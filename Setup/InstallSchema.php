@@ -9,11 +9,6 @@ use Magento\Framework\DB\Ddl\Table;
 
 class InstallSchema implements InstallSchemaInterface
 {
-    /**
-     * @param SchemaSetupInterface   $setup
-     * @param ModuleContextInterface $context
-     * @return void
-     */
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $installer = $setup;
@@ -35,7 +30,7 @@ class InstallSchema implements InstallSchemaInterface
                     ],
                     'ID'
                 )
-                ->addColumn(
+				->addColumn(
                     'store_ids',
                     Table::TYPE_TEXT,
                     255,
@@ -49,14 +44,14 @@ class InstallSchema implements InstallSchemaInterface
                     ['nullable' => false, 'default' => ''],
                     'Form Title'
                 )
-                ->addColumn(
+				->addColumn(
                     'treat_pages_as_sections',
                     Table::TYPE_SMALLINT,
                     null,
                     ['nullable' => false, 'default' => '0'],
                     'Are pages really sections?'
                 )
-                ->addColumn(
+				->addColumn(
                     'template',
                     Table::TYPE_TEXT,
                     255,
@@ -70,7 +65,7 @@ class InstallSchema implements InstallSchemaInterface
                     ['nullable' => false],
                     'Created At'
                 )
-                ->addColumn(
+				->addColumn(
                     'updated_at',
                     Table::TYPE_DATETIME,
                     null,
@@ -82,8 +77,8 @@ class InstallSchema implements InstallSchemaInterface
                 ->setOption('charset', 'utf8');
             $installer->getConnection()->createTable($table);
         }
-        
-        $tableName = $installer->getTable('etailors_forms_page');
+		
+		$tableName = $installer->getTable('etailors_forms_page');
         if ($installer->getConnection()->isTableExists($tableName) != true) {
             $table = $installer->getConnection()
                 ->newTable($tableName)
@@ -99,14 +94,14 @@ class InstallSchema implements InstallSchemaInterface
                     ],
                     'ID'
                 )
-                ->addColumn(
+				->addColumn(
                     'form_id',
                     Table::TYPE_INTEGER,
                     11,
                     ['nullable' => false, 'unsigned' => true, 'default' => '0'],
                     'etailors_forms_form.form_id'
                 )
-                ->addColumn(
+				->addColumn(
                     'store_ids',
                     Table::TYPE_TEXT,
                     255,
@@ -120,14 +115,14 @@ class InstallSchema implements InstallSchemaInterface
                     ['nullable' => false, 'default' => ''],
                     'Form Title'
                 )
-                ->addColumn(
+				->addColumn(
                     'template',
                     Table::TYPE_TEXT,
                     255,
                     ['nullable' => false, 'default' => ''],
                     'Form template'
                 )
-                ->addColumn(
+				->addColumn(
                     'sort_order',
                     Table::TYPE_INTEGER,
                     11,
@@ -141,7 +136,7 @@ class InstallSchema implements InstallSchemaInterface
                     ['nullable' => false],
                     'Created At'
                 )
-                ->addColumn(
+				->addColumn(
                     'updated_at',
                     Table::TYPE_DATETIME,
                     null,
@@ -149,18 +144,18 @@ class InstallSchema implements InstallSchemaInterface
                     'Updated At'
                 )
                 ->addForeignKey(
-                    $installer->getFkName('etailors_forms_page', 'form_id', 'etailors_forms_form', 'form_id'),
-                    'form_id',
-                    $installer->getTable('etailors_forms_form'),
-                    'form_id',
-                    \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
-                )
+					  $installer->getFkName('etailors_forms_page', 'form_id', 'etailors_forms_form', 'form_id'),
+					  'form_id',
+					  $installer->getTable('etailors_forms_form'),
+					  'form_id',
+					  \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+				)
                 ->setOption('type', 'InnoDB')
                 ->setOption('charset', 'utf8');
             $installer->getConnection()->createTable($table);
         }
-        
-        $tableName = $installer->getTable('etailors_forms_field');
+		
+		$tableName = $installer->getTable('etailors_forms_field');
         if ($installer->getConnection()->isTableExists($tableName) != true) {
             $table = $installer->getConnection()
                 ->newTable($tableName)
@@ -176,14 +171,14 @@ class InstallSchema implements InstallSchemaInterface
                     ],
                     'ID'
                 )
-                ->addColumn(
+				->addColumn(
                     'page_id',
                     Table::TYPE_INTEGER,
                     11,
                     ['nullable' => false, 'unsigned' => true, 'default' => '0'],
                     'etailors_forms_page.page_id'
                 )
-                ->addColumn(
+				->addColumn(
                     'store_ids',
                     Table::TYPE_TEXT,
                     255,
@@ -197,49 +192,49 @@ class InstallSchema implements InstallSchemaInterface
                     ['nullable' => false, 'default' => ''],
                     'Field Title'
                 )
-                ->addColumn(
+				->addColumn(
                     'type',
                     Table::TYPE_TEXT,
                     255,
                     ['nullable' => false, 'default' => ''],
                     'Field type'
-                )
-                ->addColumn(
+                )	
+				->addColumn(
                     'is_required',
                     Table::TYPE_INTEGER,
                     1,
                     ['nullable' => false, 'default' => '0'],
                     'Is field required'
-                )
-                ->addColumn(
+                )	
+				->addColumn(
                     'validation',
                     Table::TYPE_TEXT,
                     255,
                     ['nullable' => false, 'default' => ''],
                     'Validation type'
-                )
-                ->addColumn(
+                )	
+				->addColumn(
                     'options',
                     Table::TYPE_TEXT,
                     null,
                     ['nullable' => false, 'default' => ''],
                     'Options for select,radio,checkbox etc'
                 )
-                ->addColumn(
+				->addColumn(
                     'contains_email',
                     Table::TYPE_INTEGER,
                     1,
                     ['nullable' => false, 'default' => '0'],
                     'Does field contain user email?'
-                )
-                ->addColumn(
+                )					
+				->addColumn(
                     'template',
                     Table::TYPE_TEXT,
                     255,
                     ['nullable' => false, 'default' => ''],
                     'Form template'
                 )
-                ->addColumn(
+				->addColumn(
                     'sort_order',
                     Table::TYPE_INTEGER,
                     11,
@@ -253,7 +248,7 @@ class InstallSchema implements InstallSchemaInterface
                     ['nullable' => false],
                     'Created At'
                 )
-                ->addColumn(
+				->addColumn(
                     'updated_at',
                     Table::TYPE_DATETIME,
                     null,
@@ -261,19 +256,19 @@ class InstallSchema implements InstallSchemaInterface
                     'Updated At'
                 )
                 ->addForeignKey(
-                    $installer->getFkName('etailors_forms_field', 'page_id', 'etailors_forms_page', 'page_id'),
-                    'page_id',
-                    $installer->getTable('etailors_forms_page'),
-                    'page_id',
-                    \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
-                )
+					  $installer->getFkName('etailors_forms_field', 'page_id', 'etailors_forms_page', 'page_id'),
+					  'page_id',
+					  $installer->getTable('etailors_forms_page'),
+					  'page_id',
+					  \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+				)
                 ->setOption('type', 'InnoDB')
                 ->setOption('charset', 'utf8');
             $installer->getConnection()->createTable($table);
         }
-        
-        /** Container to add all answers to one person **/
-        $tableName = $installer->getTable('etailors_forms_email');
+		
+		/** Container to add all answers to one person **/
+		$tableName = $installer->getTable('etailors_forms_email');
         if ($installer->getConnection()->isTableExists($tableName) != true) {
             $table = $installer->getConnection()
                 ->newTable($tableName)
@@ -289,7 +284,7 @@ class InstallSchema implements InstallSchemaInterface
                     ],
                     'ID'
                 )
-                ->addColumn(
+				->addColumn(
                     'email',
                     Table::TYPE_TEXT,
                     255,
@@ -303,7 +298,7 @@ class InstallSchema implements InstallSchemaInterface
                     ['nullable' => false],
                     'Created At'
                 )
-                ->addColumn(
+				->addColumn(
                     'updated_at',
                     Table::TYPE_DATETIME,
                     null,
@@ -314,8 +309,8 @@ class InstallSchema implements InstallSchemaInterface
                 ->setOption('charset', 'utf8');
             $installer->getConnection()->createTable($table);
         }
-        
-        $tableName = $installer->getTable('etailors_forms_answer');
+		
+		$tableName = $installer->getTable('etailors_forms_answer');
         if ($installer->getConnection()->isTableExists($tableName) != true) {
             $table = $installer->getConnection()
                 ->newTable($tableName)
@@ -331,24 +326,24 @@ class InstallSchema implements InstallSchemaInterface
                     ],
                     'ID'
                 )
-                ->addColumn(
+				->addColumn(
                     'email_id',
                     Table::TYPE_INTEGER,
                     11,
                     ['nullable' => false, 'unsigned' => true, 'default' => '0'],
                     'etailors_forms_email.email_id'
                 )
-                ->addColumn(
+				->addColumn(
                     'field_id',
                     Table::TYPE_INTEGER,
                     11,
                     ['nullable' => false, 'unsigned' => true, 'default' => '0'],
                     'etailors_forms_field.field_id'
                 )
-                ->addColumn(
+				->addColumn(
                     'answer',
                     Table::TYPE_TEXT,
-                    null,
+                    NULL,
                     ['nullable' => false, 'default' => ''],
                     'Answer'
                 )
@@ -359,34 +354,34 @@ class InstallSchema implements InstallSchemaInterface
                     ['nullable' => false],
                     'Created At'
                 )
-                ->addColumn(
+				->addColumn(
                     'updated_at',
                     Table::TYPE_DATETIME,
                     null,
                     ['nullable' => false],
                     'Updated At'
                 )
-                
-                ->addForeignKey(
-                    $installer->getFkName('etailors_forms_answer', 'email_id', 'etailors_forms_email', 'email_id'),
-                    'email_id',
-                    $installer->getTable('etailors_forms_email'),
-                    'email_id',
-                    \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
-                )
-                ->addForeignKey(
-                    $installer->getFkName('etailors_forms_answer', 'field_id', 'etailors_forms_field', 'field_id'),
-                    'field_id',
-                    $installer->getTable('etailors_forms_field'),
-                    'field_id',
-                    \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
-                )
-                
+				
+				->addForeignKey(
+					  $installer->getFkName('etailors_forms_answer', 'email_id', 'etailors_forms_email', 'email_id'),
+					  'email_id',
+					  $installer->getTable('etailors_forms_email'),
+					  'email_id',
+					  \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+				)
+				->addForeignKey(
+					  $installer->getFkName('etailors_forms_answer', 'field_id', 'etailors_forms_field', 'field_id'),
+					  'field_id',
+					  $installer->getTable('etailors_forms_field'),
+					  'field_id',
+					  \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+				)
+				
                 ->setOption('type', 'InnoDB')
                 ->setOption('charset', 'utf8');
             $installer->getConnection()->createTable($table);
         }
-        
+		
         $installer->endSetup();
     }
 }

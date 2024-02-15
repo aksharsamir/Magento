@@ -9,19 +9,19 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      *
      * @var \Magento\Framework\Registry
      */
-    protected $coreRegistry = null;
+    protected $_coreRegistry = null;
  
     /**
      * @param \Magento\Backend\Block\Widget\Context $context
-     * @param \Magento\Framework\Registry           $registry
-     * @param array                                 $data
+     * @param \Magento\Framework\Registry $registry
+     * @param array $data
      */
     public function __construct(
         \Magento\Backend\Block\Widget\Context $context,
         \Magento\Framework\Registry $registry,
         array $data = []
     ) {
-        $this->coreRegistry = $registry;
+        $this->_coreRegistry = $registry;
         parent::__construct($context, $data);
     }
  
@@ -38,45 +38,34 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
  
         parent::_construct();
  
-        $this->buttonList->update('save', 'label', __('Save Field'));
-        $this->buttonList->add(
-            'saveandcontinue',
-            [
-                'label' => __('Save and Continue Edit'),
-                'class' => 'save',
-                'data_attribute' => [
-                    'mage-init' => [
-                        'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
-                    ],
-                ]
-            ],
-            10
-        );
+		$this->buttonList->update('save', 'label', __('Save Field'));
+		$this->buttonList->add(
+			'saveandcontinue',
+			[
+				'label' => __('Save and Continue Edit'),
+				'class' => 'save',
+				'data_attribute' => [
+					'mage-init' => [
+						'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
+					],
+				]
+			],
+			10
+		);
         
-        $this->buttonList->add(
-            'delete2',
-            [
-                'label' => __('Delete'),
-                'class' => 'delete',
-                'onclick' => 'setLocation(\'' . $this->getUrl(
-                    '*/*/deleteAction',
-                    [
-                        'id' => $this->getRequest()->getParam('id')
-                    ]
-                ) . '\')',
-            ],
-            10
-        );
-        
-        $this->buttonList->update('back', 'onclick', "setLocation('" . $this->getUrl(
-            '*/page/edit',
-            [
-                'id' => $this->getRequest()->getParam('page_id'),
-                'form_id' => $this->getRequest()->getParam('form_id')
-            ]
-        ) . "')");
+		$this->buttonList->add(
+			'delete2',
+			[
+				'label' => __('Delete'),
+				'class' => 'delete',
+				'onclick' => 'setLocation(\'' . $this->getUrl('*/*/deleteAction', ['id' => $this->getRequest()->getParam('id')]) . '\')',
+			],
+			10
+		);
+		
+		$this->buttonList->update('back', 'onclick', "setLocation('" . $this->getUrl('*/page/edit', ['id' => $this->getRequest()->getParam('page_id'), 'form_id' => $this->getRequest()->getParam('form_id')]) . "')");
         $this->buttonList->update('delete', 'label', __('Delete Field'));
-    }
+	}
  
     /**
      * Retrieve text for header element depending on loaded blocklist
@@ -85,8 +74,8 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     public function getHeaderText()
     {
-        if ($this->coreRegistry->registry('field_grid')->getId()) {
-            return __("Edit Field '%1'", $this->escapeHtml($this->coreRegistry->registry('field_grid')->getTitle()));
+        if ($this->_coreRegistry->registry('field_grid')->getId()) {
+            return __("Edit Field '%1'", $this->escapeHtml($this->_coreRegistry->registry('field_grid')->getTitle()));
         } else {
             return __('New Field');
         }
@@ -96,7 +85,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      * Check permission for passed action
      *
      * @param string $resourceId
-     * @return boolean
+     * @return bool
      */
     protected function _isAllowedAction($resourceId)
     {
@@ -111,15 +100,6 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     protected function _getSaveAndContinueUrl()
     {
-        return $this->getUrl(
-            '*/*/save',
-            [
-                '_current' => true,
-                'back' => 'edit',
-                'active_tab' => '',
-                'page_id' => $this->getRequest()->getParam('page_id'),
-                'form_id' => $this->getRequest()->getParam('form_id')
-            ]
-        );
+        return $this->getUrl('*/*/save', ['_current' => true, 'back' => 'edit', 'active_tab' => '', 'page_id' => $this->getRequest()->getParam('page_id'), 'form_id' => $this->getRequest()->getParam('form_id')]);
     }
 }

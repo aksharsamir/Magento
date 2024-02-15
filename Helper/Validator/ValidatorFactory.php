@@ -2,39 +2,30 @@
 
 namespace Etailors\Forms\Helper\Validator;
 
-class ValidatorFactory
+class ValidatorFactory 
 {
-    /**
-     * @var \Magento\Framework\ObjectManagerInterface
-     */
-    private $objectManager;
-    
-    /**
-     * @var array
-     */
-    protected $instances = [];
+	/**
+	 * @var \Magento\Framework\ObjectManagerInterface
+	 */
+	private $_objectManager;
+	
+	protected $instances = [];
 
-    /**
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
-     * @return void
-     */
-    public function __construct(\Magento\Framework\ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-    
-    /**
-     * @param mixed $validator
-     * @param array $data
-     * @return mixed
-     */
-    public function create($validator, array $data = [])
-    {
-        if (!isset($this->instances[$validator])) {
-            $class = $this->objectManager->create($validator, $data);
-            $this->instances[$validator] = $class;
-        }
+	/**
+	 * @param \Magento\Framework\ObjectManagerInterface $objectManager
+	 */
+	public function __construct(\Magento\Framework\ObjectManagerInterface $objectManager)
+	{
+		$this->_objectManager = $objectManager;
+	}
+	
+	public function create($validator, array $data = []) 
+	{
+		if (!isset($this->instances[$validator])) {
+			$class = $this->_objectManager->create($validator, $data);
+			$this->instances[$validator] = $class;
+		}
 
-        return $this->instances[$validator];
-    }
+		return $this->instances[$validator];
+	}
 }

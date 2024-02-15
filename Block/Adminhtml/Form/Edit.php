@@ -9,19 +9,19 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      *
      * @var \Magento\Framework\Registry
      */
-    protected $coreRegistry = null;
+    protected $_coreRegistry = null;
  
     /**
      * @param \Magento\Backend\Block\Widget\Context $context
-     * @param \Magento\Framework\Registry           $registry
-     * @param array                                 $data
+     * @param \Magento\Framework\Registry $registry
+     * @param array $data
      */
     public function __construct(
         \Magento\Backend\Block\Widget\Context $context,
         \Magento\Framework\Registry $registry,
         array $data = []
     ) {
-        $this->coreRegistry = $registry;
+        $this->_coreRegistry = $registry;
         parent::__construct($context, $data);
     }
  
@@ -38,38 +38,33 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
  
         parent::_construct();
  
-        $this->buttonList->update('save', 'label', __('Save Form'));
-        $this->buttonList->add(
-            'saveandcontinue',
-            [
-                'label' => __('Save and Continue Edit'),
-                'class' => 'save',
-                'data_attribute' => [
-                    'mage-init' => [
-                        'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
-                    ],
-                ]
-            ],
-            10
-        );
+		$this->buttonList->update('save', 'label', __('Save Form'));
+		$this->buttonList->add(
+			'saveandcontinue',
+			[
+				'label' => __('Save and Continue Edit'),
+				'class' => 'save',
+				'data_attribute' => [
+					'mage-init' => [
+						'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
+					],
+				]
+			],
+			10
+		);
         
-        $this->buttonList->add(
-            'delete2',
-            [
-                'label' => __('Delete'),
-                'class' => 'delete',
-                'onclick' => 'setLocation(\'' . $this->getUrl(
-                    '*/*/deleteAction',
-                    [
-                        'id' => $this->getRequest()->getParam('id')
-                    ]
-                ) . '\')',
-            ],
-            10
-        );
+		$this->buttonList->add(
+			'delete2',
+			[
+				'label' => __('Delete'),
+				'class' => 'delete',
+				'onclick' => 'setLocation(\'' . $this->getUrl('*/*/deleteAction', ['id' => $this->getRequest()->getParam('id')]) . '\')',
+			],
+			10
+		);
  
         $this->buttonList->update('delete', 'label', __('Delete Form'));
-    }
+	}
  
     /**
      * Retrieve text for header element depending on loaded blocklist
@@ -78,10 +73,8 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     public function getHeaderText()
     {
-        if ($this->coreRegistry->registry('form_grid')->getId()) {
-            return __("Edit Form '%1'", $this->escapeHtml(
-                $this->coreRegistry->registry('form_grid')->getTitle()
-            ));
+        if ($this->_coreRegistry->registry('form_grid')->getId()) {
+            return __("Edit Form '%1'", $this->escapeHtml($this->_coreRegistry->registry('form_grid')->getTitle()));
         } else {
             return __('New Form');
         }
@@ -91,7 +84,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      * Check permission for passed action
      *
      * @param string $resourceId
-     * @return boolean
+     * @return bool
      */
     protected function _isAllowedAction($resourceId)
     {

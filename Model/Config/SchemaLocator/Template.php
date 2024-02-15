@@ -35,16 +35,16 @@ class Template implements SchemaLocatorInterface
         $this->perFileSchema = $configDir . DIRECTORY_SEPARATOR . self::CONFIG_FILE_SCHEMA;
     }
 
-   /**
-    * @return string
-    */
+    /**
+     * {@inheritdoc}
+     */
     public function getSchema()
     {
         return $this->schema;
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getPerFileSchema()
     {

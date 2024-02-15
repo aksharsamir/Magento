@@ -9,19 +9,19 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
      *
      * @var \Magento\Framework\Registry
      */
-    protected $coreRegistry = null;
+    protected $_coreRegistry = null;
  
     /**
      * @param \Magento\Backend\Block\Widget\Context $context
-     * @param \Magento\Framework\Registry           $registry
-     * @param array                                 $data
+     * @param \Magento\Framework\Registry $registry
+     * @param array $data
      */
     public function __construct(
         \Magento\Backend\Block\Widget\Context $context,
         \Magento\Framework\Registry $registry,
         array $data = []
     ) {
-        $this->coreRegistry = $registry;
+        $this->_coreRegistry = $registry;
         parent::__construct($context, $data);
     }
  
@@ -38,21 +38,15 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
  
         parent::_construct();
  
-        $this->buttonList->remove('save');
-        $this->buttonList->remove('delete');
-        $this->buttonList->remove('reset');
-        
-        $this->buttonList->update(
-            'back',
-            'onclick',
-            "setLocation('" . $this->getUrl('*/editor/edit', [
-                'id' => $this->getRequest()->getParam('form_id'),
-                'active_tab' => 'emails'
-            ]) . "')"
-        );
+		$this->buttonList->remove('save');
+		$this->buttonList->remove('delete');
+		$this->buttonList->remove('reset');
+		
+		$this->buttonList->update('back', 'onclick', "setLocation('" . $this->getUrl('*/editor/edit', ['id' => $this->getRequest()->getParam('form_id'), 'active_tab' => 'emails']) . "')");
  
         $this->buttonList->update('back', 'label', __('Back'));
-    }
+        
+	}
  
     /**
      * Retrieve text for header element depending on loaded blocklist
@@ -61,10 +55,8 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
      */
     public function getHeaderText()
     {
-        if ($this->coreRegistry->registry('answer_grid')->getId()) {
-            return __("View Answer from '%1'", $this->escapeHtml(
-                $this->coreRegistry->registry('answer_grid')->getEmail()
-            ));
+        if ($this->_coreRegistry->registry('answer_grid')->getId()) {
+            return __("View Answer from '%1'", $this->escapeHtml($this->_coreRegistry->registry('answer_grid')->getEmail()));
         }
     }
  
@@ -72,7 +64,7 @@ class View extends \Magento\Backend\Block\Widget\Form\Container
      * Check permission for passed action
      *
      * @param string $resourceId
-     * @return boolean
+     * @return bool
      */
     protected function _isAllowedAction($resourceId)
     {

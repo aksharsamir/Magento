@@ -2,14 +2,14 @@
     "name": "etailors/magento2-forms",
     "description": "Forms module",
     "type": "magento2-module",
-    "version": "23.0.0",
+    "version": "1.0.9",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
       ],
     "require": {
-        "php": "~7.2.0|~7.3.0",
-        "magento/magento2-base": "^2.3",
+        "php": "~7.3.0|~7.4.33",
+        "magento/magento2-base": "^2.4",
         "Etailors/MagentoBase": "*"
     },
 	"autoload": {

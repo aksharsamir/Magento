@@ -2,35 +2,29 @@
 
 namespace Etailors\Forms\Block\Adminhtml\Form\Page\Edit\Tab\Fields;
 
-class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
+class Grid extends \Magento\Backend\Block\Widget\Grid\Extended 
 {
     /**
      * @var \Etailors\Forms\Model\Form\Page\FieldFactory $fieldFactory
      */
     protected $fieldFactory;
-    
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $coreRegistry;
+	
+	protected $_coreRegistry;
 
     /**
-     * @param \Magento\Backend\Block\Template\Context      $context
-     * @param \Magento\Backend\Helper\Data                 $backendHelper
-     * @param \Etailors\Forms\Model\Form\Page\FieldFactory $fieldFactory
-     * @param \Magento\Framework\Registry                  $registry
-     * @param array                                        $data
-     * @return void
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Backend\Helper\Data $backendHelper,
-        \Etailors\Forms\Model\Form\Page\FieldFactory $fieldFactory,
-        \Magento\Framework\Registry $registry,
+		\Etailors\Forms\Model\Form\Page\FieldFactory $fieldFactory,
+        \Magento\Store\Model\StoreFactory $storeFactory,
+		\Magento\Framework\Registry $registry,
         array $data = []
     ) {
-        $this->fieldFactory = $fieldFactory;
-        $this->coreRegistry = $registry;
+		$this->fieldFactory = $fieldFactory;
+		$this->_coreRegistry = $registry;
+		$this->storeFactory = $storeFactory;
         parent::__construct($context, $backendHelper, $data);
     }
 
@@ -48,28 +42,27 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->setUseAjax(true);
         $this->setVarNameFilter('fields_filter');
     }
-    
-    /**
-     * @return string
-     */
-    public function getMainButtonsHtml()
+	
+	public function getMainButtonsHtml()
     {
         $html = parent::getMainButtonsHtml(); //get the parent class buttons
-
-        $page = $this->coreRegistry->registry('page_grid');
-        if ($page->getId()) {
-            $addButton = $this->getLayout()->createBlock('Magento\Backend\Block\Widget\Button')
-                ->setData([
-                'label'     => 'Add',
-                'onclick'   => "setLocation('" . $this->getUrl('forms/field/new', [
-                        'form_id' => $this->getRequest()->getParam('form_id'),
-                        'page_id' => $this->coreRegistry->registry('page_grid')->getId()
-                ]) . "')",
-                'class'   => 'task'
-                ])->toHtml();
-        } else {
-            $addButton = __("Please save the page first"). '<br />';
-        }
+        
+		
+		$page = $this->_coreRegistry->registry('page_grid');
+		if ($page->getId()) {
+			$addButton = $this->getLayout()->createBlock('Magento\Backend\Block\Widget\Button')
+				->setData(array(
+				'label'     => 'Add',
+				'onclick'   => "setLocation('" . $this->getUrl('forms/field/new', [
+						'form_id' => $this->getRequest()->getParam('form_id'), 
+						'page_id' => $this->_coreRegistry->registry('page_grid')->getId()
+				]) . "')",
+				'class'   => 'task'
+			))->toHtml();
+		}
+		else {
+			$addButton = __("Please save the page first"). '<br />';
+		}
 
         return $addButton.$html;
     }
@@ -88,16 +81,25 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
      */
     protected function _prepareCollection()
     {
-        $pageId = $this->getRequest()->getParam('id');
-        
+		$pageId = $this->getRequest()->getParam('id');
+		
         $collection = $this->fieldFactory->create()->getCollection();
-        $collection->addFieldToFilter('page_id', $pageId);
-        
-        $this->setCollection($collection);
+		$collection->addFieldToFilter('page_id', $pageId);
+		
+		$this->setCollection($collection);
 
         parent::_prepareCollection();
 
         return $this;
+    }
+
+    /**
+     * @param \Magento\Backend\Block\Widget\Grid\Column $column
+     * @return $this
+     */
+    protected function _addColumnFilterToCollection($column)
+    {
+       
     }
 
     /**
@@ -115,7 +117,8 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
             ]
         );
 
-        $this->addColumn(
+        
+		$this->addColumn(
             'field_type',
             [
                 'header' => __('Type'),
@@ -123,8 +126,8 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
                 'class' => ''
             ]
         );
-        
-        $this->addColumn(
+		
+		$this->addColumn(
             'field_sort_order',
             [
                 'header' => __('Sorting'),
@@ -136,6 +139,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         return parent::_prepareColumns();
     }
 
+    
     /**
      * @return string
      */
@@ -153,10 +157,10 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         return $this->getUrl(
             '*/field/edit',
             [
-                'id' => $row->getId(),
-                'page_id' => $this->getRequest()->getParam('id'),
-                'form_id' => $this->getRequest()->getParam('form_id')
-            ]
+				'id' => $row->getId(),
+				'page_id' => $this->getRequest()->getParam('id'),
+				'form_id' => $this->getRequest()->getParam('form_id')
+			]
         );
     }
 }

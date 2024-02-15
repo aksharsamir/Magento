@@ -11,43 +11,46 @@ use Magento\Config\Model\Config\Structure\Element\Dependency\FieldFactory;
  */
 class General extends Generic implements TabInterface
 {
-
     /**
-     * @var FieldFactory
+     * @var \Magento\Store\Model\System\Store
      */
-    protected $fieldFactory;
-    
+    protected $_systemStore;
+	
+	protected $_fieldFactory;
+ 
+    protected $_status;
+	
+	protected $request;
+	
+	protected $templateConfig;
+	
+	protected $autfillClassConfig;
+	
+ 
     /**
-     * @var \Etailors\Forms\Model\Config\Data\Template
-     */
-    protected $templateConfig;
-    
-    /**
-     * @var \Etailors\Forms\Model\Config\Data\Autofill
-     */
-    protected $autfillClassConfig;
-    
-    /**
-     * @param \Magento\Backend\Block\Template\Context    $context
-     * @param FieldFactory                               $fieldFactory
-     * @param \Magento\Framework\Registry                $registry
-     * @param \Magento\Framework\Data\FormFactory        $formFactory
-     * @param \Etailors\Forms\Model\Config\Data\Template $templateConfig
-     * @param \Etailors\Forms\Model\Config\Data\Autofill $autfillClassConfig
-     * @param array                                      $data
+     * @param \Magento\Backend\Block\Template\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\Data\FormFactory $formFactory
+     * @param \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig
+     * @param \Magento\Store\Model\System\Store $systemStore
+     * @param array $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
-        FieldFactory $fieldFactory,
+		FieldFactory $fieldFactory,
         \Magento\Framework\Registry $registry,
+		\Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\Data\FormFactory $formFactory,
-        \Etailors\Forms\Model\Config\Data\Template $templateConfig,
-        \Etailors\Forms\Model\Config\Data\Autofill $autfillClassConfig,
+        \Magento\Store\Model\System\Store $systemStore,
+		\Etailors\Forms\Model\Config\Data\Template $templateConfig,
+		\Etailors\Forms\Model\Config\Data\Autofill $autfillClassConfig,
         array $data = []
     ) {
-        $this->templateConfig = $templateConfig;
-        $this->autfillClassConfig = $autfillClassConfig;
-        $this->fieldFactory = $fieldFactory;
+        $this->_systemStore = $systemStore;
+		$this->request = $request;
+		$this->templateConfig = $templateConfig;
+		$this->autfillClassConfig = $autfillClassConfig;
+		$this->_fieldFactory = $fieldFactory;
         parent::__construct($context, $registry, $formFactory, $data);
     }
  
@@ -75,8 +78,8 @@ class General extends Generic implements TabInterface
  
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create();
-        $this->setForm($form);
-        
+		$this->setForm($form);
+		
         $fieldset = $form->addFieldset(
             'base_fieldset',
             ['legend' => __('General Information'), 'class' => 'fieldset-wide']
@@ -96,8 +99,8 @@ class General extends Generic implements TabInterface
                 'required' => true,
             ]
         );
-        
-        $fieldset->addField(
+		
+		$fieldset->addField(
             'type',
             'select',
             [
@@ -105,19 +108,19 @@ class General extends Generic implements TabInterface
                 'title' => __('Type'),
                 'name' => 'type',
                 'required' => true,
-                'values' => [
-                    ['value' => 'textfield', 'label' => 'Text Field'],
-                    ['value' => 'textarea', 'label' => 'Text Area'],
-                    ['value' => 'select', 'label' => 'Dropdown'],
-                    ['value' => 'radio', 'label' => 'Radio'],
-                    ['value' => 'check', 'label' => 'Checkbox'],
-                    ['value' => 'hidden', 'label' => 'Hidden'],
-                    ['value' => 'recaptcha', 'label' => 'Recaptcha']
-                ]
+				'values' => [
+					['value' => 'textfield', 'label' => 'Text Field'],
+					['value' => 'textarea', 'label' => 'Text Area'],
+					['value' => 'select', 'label' => 'Dropdown'],
+					['value' => 'radio', 'label' => 'Radio'],
+					['value' => 'check', 'label' => 'Checkbox'],
+					['value' => 'hidden', 'label' => 'Hidden'],
+					['value' => 'recaptcha', 'label' => 'Recaptcha']
+				]
             ]
         );
-        
-        $fieldset->addField(
+		
+		$fieldset->addField(
             'options_textarea',
             'textarea',
             [
@@ -125,11 +128,11 @@ class General extends Generic implements TabInterface
                 'title' => __('Options'),
                 'name' => 'options',
                 'required' => false,
-                'note' => __('For Dropdown, radio and checkbox only. One option per line')
+				'note' => __('For Dropdown, radio and checkbox only. One option per line')
             ]
         );
-        
-        $fieldset->addField(
+		
+		$fieldset->addField(
             'options_textfield',
             'text',
             [
@@ -137,14 +140,14 @@ class General extends Generic implements TabInterface
                 'title' => __('Default value'),
                 'name' => 'hidden_value',
                 'required' => false,
-                'value' => $model->getOptions(),
-                'note' => __('This is the textual value for the hidden field')
+				'value' => $model->getOptions(),
+				'note' => __('This is the textual value for the hidden field')
             ]
         );
-        
-        $autofillClasses = $this->autfillClassConfig->toOptionArray();
-        
-        $fieldset->addField(
+		
+		$autofillClasses = $this->autfillClassConfig->toOptionArray();
+		
+		$fieldset->addField(
             'options_classSelect',
             'select',
             [
@@ -152,13 +155,13 @@ class General extends Generic implements TabInterface
                 'title' => __('Autofill with'),
                 'name' => 'options',
                 'required' => false,
-                'values' => $autofillClasses,
-                'value' => $model->getOptions(),
-                'note' => __('Fill value for hidden field with ID of this object. Must be present on page!')
+				'values' => $autofillClasses,
+				'value' => $model->getOptions(),
+				'note' => __('Fill value for hidden field with ID of this object. Must be present on page!')
             ]
         );
-        
-        $fieldset->addField(
+		
+		$fieldset->addField(
             'sort_order',
             'text',
             [
@@ -168,8 +171,8 @@ class General extends Generic implements TabInterface
                 'required' => true,
             ]
         );
-        
-        $fieldset->addField(
+		
+		$fieldset->addField(
             'template',
             'select',
             [
@@ -177,11 +180,11 @@ class General extends Generic implements TabInterface
                 'title' => __('Template'),
                 'name' => 'template',
                 'required' => true,
-                'values' => $this->templateConfig->toOptionArray('field')
+				'values' => $this->templateConfig->toOptionArray('field')
             ]
         );
-        
-        $fieldset->addField(
+		
+		$fieldset->addField(
             'display_in_overview',
             'checkbox',
             [
@@ -189,16 +192,16 @@ class General extends Generic implements TabInterface
                 'title' => __('Show answer in armin overview?'),
                 'name' => 'display_in_overview',
                 'required' => false,
-                'checked' => ($model->getDisplayInOverview() == 1) ? true : false,
-                'onchange' => 'this.value = this.checked;'
+				'checked' => ($model->getDisplayInOverview() == 1) ? true : false,
+				'onchange' => 'this.value = this.checked;'
             ]
         );
-        
-        $refField = $this->fieldFactory->create(
-            ['fieldData' => ['value' => 'select,check,radio', 'separator' => ','], 'fieldPrefix' => '']
-        );
+		
+		$refField = $this->_fieldFactory->create(
+			 ['fieldData' => ['value' => 'select,check,radio', 'separator' => ','], 'fieldPrefix' => '']
+		);
 
-        $this->setChild(
+		$this->setChild(
             'form_after',
             $this->getLayout()->createBlock(
                 'Magento\Backend\Block\Widget\Form\Element\Dependence'
@@ -210,89 +213,89 @@ class General extends Generic implements TabInterface
                     "options_textarea",
                     'options_textarea'
                 )
-                ->addFieldMap(
+				->addFieldMap(
                     "options_textfield",
                     'options_textfield'
                 )
-                ->addFieldMap(
+				->addFieldMap(
                     "options_classSelect",
                     'options_classSelect'
                 )
-                ->addFieldDependence(
+				->addFieldDependence(
                     'options_textarea',
                     'type',
                     $refField
                 )
-                ->addFieldDependence(
+				->addFieldDependence(
                     'options_textfield',
                     'type',
                     'hidden'
                 )
-                ->addFieldDependence(
+				->addFieldDependence(
                     'options_classSelect',
                     'type',
                     'hidden'
                 )
         );
-        
-        if ($model->getType() == 'hidden') {
-            $fieldAppend = 'textfield';
-            foreach ($autofillClasses as $autofillClass) {
-                if ($autofillClass['value'] == $model->getOptions()) {
-                    $fieldAppend = 'classSelect';
-                }
-            }
-            $model->setData('options_' . $fieldAppend, $model->getOptions());
-        } else {
-            $model->setData('options_textarea', $model->getOptions());
+		
+		if ($model->getType() == 'hidden') {
+			$fieldAppend = 'textfield';
+			foreach ($autofillClasses as $autofillClass) {
+				if ($autofillClass['value'] == $model->getOptions()) {
+					$fieldAppend = 'classSelect';
+				}
+			}
+			$model->setData('options_' . $fieldAppend, $model->getOptions());
+		}else {
+			$model->setData('options_textarea', $model->getOptions());
         }
         
         $form->setValues($model->getData());
-        
+		
         return parent::_prepareForm();
     }
-    
-    /**
-     * Return Tab label
-     *
-     * @return string
-     * @api
-     */
-    public function getTabLabel()
-    {
-        return __('General');
-    }
+	
+	/**
+	 * Return Tab label
+	 *
+	 * @return string
+	 * @api
+	 */
+	public function getTabLabel()
+	{
+		return __('General');
+	}
 
-    /**
-     * Return Tab title
-     *
-     * @return string
-     * @api
-     */
-    public function getTabTitle()
-    {
-        return __('General');
-    }
+	/**
+	 * Return Tab title
+	 *
+	 * @return string
+	 * @api
+	 */
+	public function getTabTitle()
+	{
+		return __('General');
+	}
 
-    /**
-     * Can show tab in tabs
-     *
-     * @return boolean
-     * @api
-     */
-    public function canShowTab()
-    {
-        return true;
-    }
+	/**
+	 * Can show tab in tabs
+	 *
+	 * @return boolean
+	 * @api
+	 */
+	public function canShowTab()
+	{
+		return true;
+	}
 
-    /**
-     * Tab is hidden
-     *
-     * @return boolean
-     * @api
-     */
-    public function isHidden()
-    {
-        return false;
-    }
+	/**
+	 * Tab is hidden
+	 *
+	 * @return boolean
+	 * @api
+	 */
+	public function isHidden()
+	{
+		return false;
+	}
 }
