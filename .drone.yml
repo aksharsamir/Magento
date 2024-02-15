@@ -1,0 +1,39 @@
+
+kind: pipeline
+name: default
+
+steps:
+
+- name: magento 2 coding standards update
+  image: mwbgrob/magento-code-quality-tools:latest
+  commands:
+  - php /usr/local/lib/magento-code-quality-tools/vendor/bin/phpcbf --standard=/usr/local/lib/magento-code-quality-tools/vendor/magento/magento2-functional-testing-framework/dev/tests/static/Magento -sv --extensions=php --ignore=vendor .
+
+- name: code standard commit
+  image: docker:git
+  failure: ignore
+  commands:
+  - git commit -a -m "code standard update"
+  - git push origin ${DRONE_SOURCE_BRANCH}
+  when:
+    status:
+    - failure
+
+- name: test magento 2 coding standards
+  image: mwbgrob/magento-code-quality-tools:latest
+  failure: ignore
+  commands:
+  - php /usr/local/lib/magento-code-quality-tools/vendor/bin/phpcs --standard=/usr/local/lib/magento-code-quality-tools/vendor/magento/magento2-functional-testing-framework/dev/tests/static/Magento -sv --extensions=php --ignore=vendor .
+
+- name: test magento 2 code paste detector
+  image: mwbgrob/magento-code-quality-tools:latest
+  failure: ignore
+  commands:
+  - php /usr/local/lib/magento-code-quality-tools/vendor/bin/phpcpd .
+
+- name: test magento 2 code mess detector
+  image: mwbgrob/magento-code-quality-tools:latest
+  failure: ignore
+  commands:
+  - php /usr/local/lib/magento-code-quality-tools/vendor/bin/phpmd . text /usr/local/lib/magento-code-quality-tools/vendor/magento/magento2-functional-testing-framework/dev/tests/static/Magento/CodeMessDetector/ruleset.xml
+

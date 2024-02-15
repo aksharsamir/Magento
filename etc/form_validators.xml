@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="form_validators.xsd">
+    <form_validators>
+		<validator>
+            <name>None</name>
+            <class>Etailors\Forms\Helper\Validator\None</class>
+        </validator>
+        <validator>
+            <name>Alphabetic</name>
+            <class>Etailors\Forms\Helper\Validator\Alpha</class>
+        </validator>
+		<validator>
+            <name>Alpha numeric</name>
+            <class>Etailors\Forms\Helper\Validator\AlphaNum</class>
+        </validator>
+		<validator>
+            <name>Numeric</name>
+            <class>Etailors\Forms\Helper\Validator\Numeric</class>
+        </validator>
+		<validator>
+            <name>Emailaddress</name>
+            <class>Etailors\Forms\Helper\Validator\Email</class>
+        </validator>
+		<validator>
+            <name>URL</name>
+            <class>Etailors\Forms\Helper\Validator\Url</class>
+        </validator>
+    </form_validators>
+</config>

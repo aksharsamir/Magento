@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="form_validators" type="formsValidator" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="formsValidator">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="validator" type="validator" />
+        </xs:sequence>
+    </xs:complexType>
+	<xs:complexType name="validator">
+        <xs:sequence>
+            <xs:element name="name" />
+            <xs:element name="class" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

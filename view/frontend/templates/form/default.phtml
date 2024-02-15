@@ -1,0 +1,43 @@
+<?php
+	$form = $block->getForm();
+?>
+
+<form   method="post" 
+        id="etailors-form-<?php echo $form->getId(); ?>" 
+        action="<?php echo $block->getPostUrl(); ?>" 
+        enctype="multipart/form-data" 
+        data-mage-init='{"validation":{}}'>
+	<?php echo $block->getChildHtml('etailors_forms_form_before') ?>
+	<div class="container">
+        <?php echo $block->getChildHtml('form_content'); ?>	
+		<?php echo $block->getChildHtml('etailors_forms_form_after') ?>
+		<?php echo $block->getChildHtml('form_buttons'); ?>
+		<?php echo $block->getChildHtml('etailors_forms_form_after_submit') ?>
+	</div>	
+</form>
+<script type="text/x-magento-init">
+{
+	"#etailors-form-<?php echo $form->getId(); ?>": {
+		"Etailors_Forms/js/form": {
+		    "form_id": <?php echo $form->getId(); ?>,
+		    "contentSelector": ".form-fields",
+		    "buttonsSelector": ".form-buttons",
+		    "loaderSelector": "#forms-loader",
+		    "messageContainerSelector": ".message-container",
+		    "changeUrl": <?php echo (string)$block->canChangeUrl(); ?>
+		}
+	}
+}
+</script>
+
+<script id="forms-field-error-template" type="text/x-magento-template">
+    <div class="mage-error" generated="true">
+        <%- data.errorMessage %>
+    </div>
+</script>
+
+<script id="forms-message-template" type="text/x-magento-template">
+    <div class="message <%- data.severity %> message-<%-data.severity %>">
+        <%- data.message %>
+    </div>
+</script>

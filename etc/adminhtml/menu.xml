@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="Etailors_Forms::Forms"
+            title="Forms"
+            module="Etailors_Forms"
+            sortOrder="68"
+            parent="Etailors_Base::MenuItem"
+            resource="Etailors_Forms::Forms_Config"
+        />
+		
+		<add
+            id="Etailors_Forms::Forms_Settings"
+            title="Settings"
+            module="Etailors_Forms"
+            action="adminhtml/system_config/edit/section/etailors_forms/"
+            sortOrder="10"
+            parent="Etailors_Forms::Forms"
+            resource="Etailors_Forms::Forms_Config"
+        />
+		
+		<add
+            id="Etailors_Forms::Form_Editor"
+            title="Forms"
+            module="Etailors_Forms"
+            action="forms/editor/index"
+            sortOrder="15"
+            parent="Etailors_Forms::Forms"
+            resource="Etailors_Forms::Forms_Config"
+        />
+    </menu>
+</config>

@@ -1,0 +1,23 @@
+<?php
+	$siteKey = $block->getSetting('site_key', 'recaptcha');
+	$secretKey = $block->getSetting('secret_key', 'recaptcha');
+?>
+<?php if (!empty($siteKey) && !empty($secretKey)): ?>
+<div class="recaptcha-wrapper">
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<div g-recaptcha class="g-recaptcha" data-sitekey="<?php echo $siteKey; ?>"></div>
+	
+	<input type="hidden" name="<?php echo $this->getFieldName(); ?>" 
+			id="<?php echo $this->getFieldHtmlId(); ?>"
+			class="<?php echo $this->getFieldClasses(); ?>">
+			
+	<script type="text/x-magento-init">
+	{
+		"#<?php echo $this->getFieldHtmlId(); ?>": {
+			"forms_recaptcha": {}
+		}
+	}
+	</script>
+</div>
+<?php endif; ?>
+

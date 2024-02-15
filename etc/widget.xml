@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+	<widget id="etailors_forms_widget" class="Etailors\Forms\Block\Widget\Form">
+		<label translate="true">e-tailors: Form</label>
+		<description translate="true">Display a form</description>
+		<parameters>
+			<parameter name="form_id" xsi:type="select"  visible="true" 
+					source_model="Etailors\Forms\Model\Widget\Config\Source\Form">
+				<label translate="true">Form</label>
+			</parameter>
+		</parameters>
+	</widget>
+</widgets>

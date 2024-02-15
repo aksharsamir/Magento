@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<virtualType name="FormsTemplateReader" type="Magento\Framework\Config\Reader\Filesystem">
+		<arguments>
+			<argument name="converter" xsi:type="object">Etailors\Forms\Model\Config\Converter\Template</argument>
+			<argument name="schemaLocator" xsi:type="object">Etailors\Forms\Model\Config\SchemaLocator\Template</argument>
+			<argument name="fileName" xsi:type="string">form_templates.xml</argument>
+		</arguments>
+	</virtualType>
+	<type name="Etailors\Forms\Model\Config\Data\Template">
+		<arguments>
+			<argument name="reader" xsi:type="object">FormsTemplateReader</argument>
+			<argument name="cacheId" xsi:type="string">etailors_forms_templates_cache</argument>
+		</arguments>
+	</type>
+	
+	<virtualType name="FormsValidatorReader" type="Magento\Framework\Config\Reader\Filesystem">
+		<arguments>
+			<argument name="converter" xsi:type="object">Etailors\Forms\Model\Config\Converter\Validator</argument>
+			<argument name="schemaLocator" xsi:type="object">Etailors\Forms\Model\Config\SchemaLocator\Validator</argument>
+			<argument name="fileName" xsi:type="string">form_validators.xml</argument>
+		</arguments>
+	</virtualType>
+	<type name="Etailors\Forms\Model\Config\Data\Validator">
+		<arguments>
+			<argument name="reader" xsi:type="object">FormsValidatorReader</argument>
+			<argument name="cacheId" xsi:type="string">etailors_forms_validators_cache</argument>
+		</arguments>
+	</type>
+	
+	<virtualType name="AutofillClassesReader" type="Magento\Framework\Config\Reader\Filesystem">
+		<arguments>
+			<argument name="converter" xsi:type="object">Etailors\Forms\Model\Config\Converter\Autofill</argument>
+			<argument name="schemaLocator" xsi:type="object">Etailors\Forms\Model\Config\SchemaLocator\Autofill</argument>
+			<argument name="fileName" xsi:type="string">form_classes.xml</argument>
+		</arguments>
+	</virtualType>
+	<type name="Etailors\Forms\Model\Config\Data\Autofill">
+		<arguments>
+			<argument name="reader" xsi:type="object">AutofillClassesReader</argument>
+			<argument name="cacheId" xsi:type="string">etailors_forms_autofill_classes_cache</argument>
+		</arguments>
+	</type>
+	
+	<type name="Magento\Framework\App\RouterList">
+		<arguments>
+			<argument name="routerList" xsi:type="array">
+				<item name="formsrouter" xsi:type="array">
+					<item name="class" xsi:type="string">Etailors\Forms\Controller\FormRouter</item>
+					<item name="disable" xsi:type="boolean">false</item>
+					<item name="sortOrder" xsi:type="string">21</item>
+				</item>
+			</argument>
+		</arguments>
+	</type>
+	
+	<type name="Etailors\Forms\Model\Session">
+        <arguments>
+            <argument name="storage" xsi:type="object">Etailors\Forms\Model\Session\Storage</argument>
+        </arguments>
+    </type>
+</config>

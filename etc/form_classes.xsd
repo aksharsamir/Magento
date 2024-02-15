@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="autofill_classes" type="autofillClass" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="autofillClass">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="class" type="class" />
+        </xs:sequence>
+    </xs:complexType>
+	<xs:complexType name="class">
+        <xs:sequence>
+            <xs:element name="id" />
+            <xs:element name="name" />
+            <xs:element name="class" />
+			<xs:element name="id_field" />
+            <xs:element name="output_value" />
+			<xs:element name="register_name" />
+            <xs:element name="param_name" />
+			<xs:element name="action_name" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

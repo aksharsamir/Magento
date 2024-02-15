@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="form_templates" type="formsTemplate" />
+				<xs:element minOccurs="1" maxOccurs="unbounded" name="page_templates" type="formsTemplate" />
+				<xs:element minOccurs="1" maxOccurs="unbounded" name="field_templates" type="formsTemplate" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="formsTemplate">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="template" type="template" />
+        </xs:sequence>
+    </xs:complexType>
+	<xs:complexType name="template">
+        <xs:sequence>
+            <xs:element name="name" />
+            <xs:element name="file" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

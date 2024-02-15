@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="etailors_forms_email_user" label="Form user email" file="user.html" type="html" module="Etailors_Forms" area="frontend"/>
+	<template id="etailors_forms_email_admin" label="Form admin email" file="admin.html" type="html" module="Etailors_Forms" area="frontend"/>
+</config>

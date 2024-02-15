@@ -1,0 +1,21 @@
+{
+    "name": "etailors/magento2-forms",
+    "description": "Forms module",
+    "type": "magento2-module",
+    "version": "23.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+      ],
+    "require": {
+        "php": "~7.2.0|~7.3.0",
+        "magento/magento2-base": "^2.3",
+        "Etailors/MagentoBase": "*"
+    },
+	"autoload": {
+		"files": [ "registration.php" ],
+		"psr-4": {
+		  "Etailors\\Forms\\": ""
+		}
+	}
+}

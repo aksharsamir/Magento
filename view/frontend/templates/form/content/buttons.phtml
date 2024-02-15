@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="col-xs-12">
+		<?php if ($this->displaySubmitButton()): ?>
+			<?php if ($this->displayPreviousButton()): ?>
+				<div class="pull-left">
+					<a class="btn button previous" data-action="previous" href="<?php echo $block->getPreviousPageUrl(); ?>">
+						<span><?php echo __('Previous page'); ?></span>
+					</a>
+				</div>
+			<?php endif; ?>
+			<div class="pull-right">
+				<button type="submit" class="btn btn-theme primary btn-primary">
+					<span><?php echo __('Submit'); ?></span>
+				</button>
+			</div>
+		<?php else: ?>
+			<?php if ($this->displayPreviousButton()): ?>
+				<div class="pull-left">
+					<a class="btn button previous" href="<?php echo $block->getPreviousPageUrl(); ?>">
+						<span><?php echo __('Previous page'); ?></span>
+					</a>
+				</div>
+			<?php endif; ?>
+			<div class="pull-right">
+				<button type="submit" name="new_page" value="<?php echo $this->getNextPage(); ?>" class="btn btn-theme primary btn-primary">
+					<span><?php echo __('Next page'); ?></span>
+				</button>
+			</div>
+		<?php endif; ?>
+	</div>
+</div>

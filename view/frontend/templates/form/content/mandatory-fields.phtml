@@ -1,0 +1,4 @@
+<?php echo $this->getBlockHtml('formkey'); ?>
+<input type="hidden" name="form_id" value="<?php echo $block->getForm()->getId(); ?>" />
+<input type="hidden" name="current_page" value="<?php echo $block->getRequest()->getParam('page', 1); ?>" />
+<input type="hidden" name="num_pages" value="<?php echo $block->getForm()->getPagesCount(); ?>" />

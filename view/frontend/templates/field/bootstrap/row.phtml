@@ -1,0 +1,12 @@
+<div class="field
+    <?php if ($this->getField()->getIsRequired()): ?> required<?php endif; ?> 
+    <?php if (!$this->isFieldValid()): ?> has-error has-feedback<?php endif; ?>">
+	
+	<label class="label" for="<?php echo $this->getFieldHtmlId(); ?>">
+		<?php echo $this->getField()->getTitle(); ?>
+	</label>
+	
+	<div class="control">
+    	<?php echo $this->renderInput(); ?>
+    </div>
+</div>

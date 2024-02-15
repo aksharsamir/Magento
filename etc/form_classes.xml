@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="form_validators.xsd">
+    <autofill_classes>
+		<class>
+			<id>current_product</id>
+            <name>Current Product</name>
+            <class>Magento\Catalog\Model\Product</class>
+			<id_field>entity_id</id_field>
+			<output_value>%name (%sku)</output_value>
+			<register_name>current_product</register_name>
+			<param_name>id</param_name>
+			<action_name>catalog_product_view</action_name>
+        </class>
+    </autofill_classes>
+</config>

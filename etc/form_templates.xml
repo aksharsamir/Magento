@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="form_templates.xsd">
+    <form_templates>
+        <template>
+            <name>Default</name>
+            <file>form/default.phtml</file>
+        </template>
+    </form_templates>
+	<page_templates>
+		<template>
+            <name>Default</name>
+            <file>page/default.phtml</file>
+        </template>
+		<template>
+            <name>Bootstrap columm 6</name>
+            <file>page/bootstrap/col-6.phtml</file>
+        </template>
+		<template>
+            <name>Bootstrap columm 4</name>
+            <file>page/bootstrap/col-4.phtml</file>
+        </template>
+	</page_templates>
+	<field_templates>
+		<template>
+            <name>Default</name>
+            <file>field/default.phtml</file>
+        </template>
+		<template>
+            <name>Bootstrap Row</name>
+            <file>field/bootstrap/row.phtml</file>
+        </template>
+	</field_templates>
+</config>
